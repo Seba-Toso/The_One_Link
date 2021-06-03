@@ -1,0 +1,5 @@
+DELETE http://localhost:3001/api/links/cambiarestoporID
+Content-Type: application/json
+//Authorization goes here 
+//Authorization: 'Bearer token'
+

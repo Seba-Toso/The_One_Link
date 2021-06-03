@@ -1,0 +1,11 @@
+PUT http://localhost:3001/api/links/60b3d42173e36e43780cdaf3
+Content-Type: application/json
+//Authorization goes here 
+//Authorization: 'Bearer token'
+
+
+{
+    "name": "Nota modificada para hacer pruebas",
+    "source": "Modified Test v2",
+    "uri": "www.test.com"
+}

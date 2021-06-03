@@ -1,0 +1,10 @@
+POST http://localhost:3001/api/links
+Content-Type: application/json
+//Authorization goes here 
+Authorization: 'Bearer ponetokenaca'
+
+{
+    "name": "Nota para hacer pruebas",
+    "source": "test",
+    "uri": "www.test.com"
+}

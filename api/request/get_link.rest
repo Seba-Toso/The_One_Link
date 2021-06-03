@@ -1,0 +1,4 @@
+GET http://localhost:3001/api/links
+Content-Type: application/json
+Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYjQyMGZjZGNhYzMxNDMxY2I3YWYwNSIsInVzZXJuYW1lIjoiRG9uIFRveG8iLCJpYXQiOjE2MjI0MTc2NzIsImV4cCI6MTYyNTAwOTY3Mn0.zXur7ZBILvzotzeSpS_eRKIppCq8BhkK2BzXED83Fwo"
+
