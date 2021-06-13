@@ -8,9 +8,13 @@ import {
 	Spacer,
 	useColorModeValue,
 	Text,
+	useMediaQuery
 } from '@chakra-ui/react'
 
 const LinksList = ({ linkList, setLinkList, handleAlerts }) => {
+
+	const [isSmallerThan1025] = useMediaQuery("(max-width: 1025px)")
+
 	//Styles
 	const liBackground = useColorModeValue('gray.50', '#1e2533')
 
@@ -58,11 +62,18 @@ const LinksList = ({ linkList, setLinkList, handleAlerts }) => {
 		<>
 			<UserControl />
 
-			<Box w='100%'>
-				<Flex>
-					<List spacing={5} borderLeft='1px dotted' pl={10} w='60%'>
+			<Box>
+				<Flex >
+					<List 
+						spacing={5} 
+						borderLeft={isSmallerThan1025? 'none' : '1px dotted' } 
+						pl={isSmallerThan1025? 0 : 10} 
+						mr={isSmallerThan1025? 10 : 0}
+						w={isSmallerThan1025? '80%': '60%'}
+
+					>
 						{!linkList || linkList.length === 0 ? (
-							<Text ml={20} bg={liBackground} p={3} textAlign='center'>
+							<Text ml={20} bg={liBackground} p={isSmallerThan1025? 0 : 3} textAlign='center'>
 								Start adding links
 							</Text>
 						) : (

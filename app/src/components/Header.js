@@ -1,13 +1,14 @@
-import { Box, IconButton, useColorMode, Flex, Heading } from '@chakra-ui/react'
+import { Box, IconButton, useColorMode, Flex, Heading, useMediaQuery } from '@chakra-ui/react'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 
 function Header() {
 	const { colorMode, toggleColorMode } = useColorMode()
-
+	const [isSmallerThan1025] = useMediaQuery("(max-width: 1025px)")
+	
 	return (
 		<Box bg='tomato' w='100%'>
 			<Flex p={10}>
-				<Heading w='100%' size='3xl' color='white'>
+				<Heading w='100%' size={useMediaQuery ? 'xl' : '3xl'} color='white'>
 					One Link to rule them all.
 				</Heading>
 				<IconButton

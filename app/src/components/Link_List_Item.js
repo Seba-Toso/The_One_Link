@@ -15,10 +15,12 @@ import {
 	ModalCloseButton,
 	ModalContent,
 	SlideFade,
+	useMediaQuery
 } from '@chakra-ui/react'
 import { useEffect } from 'react'
 
 const ListLi = ({ link, handleDeleteLink, handleUdpdateLink }) => {
+	const [isSmallerThan1025] = useMediaQuery("(max-width: 1025px)")
 	const { name, source, uri, id } = link
 	//Modal handler
 	const { isOpen, onOpen, onClose } = useDisclosure()
@@ -43,7 +45,7 @@ const ListLi = ({ link, handleDeleteLink, handleUdpdateLink }) => {
 
 	return (
 		<SlideFade in={isFade} offsetY='20px'>
-			<ListItem ml={20} bg={liBackground} p={3}>
+			<ListItem ml={isSmallerThan1025? 5 : 20} bg={liBackground} p={3}>
 				<Flex>
 					<Link href={uri} isExternal ml={7} w='70%'>
 						{name}

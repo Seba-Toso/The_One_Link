@@ -10,9 +10,11 @@ import {
 	MenuButton,
 	MenuList,
 	MenuItem,
+	useMediaQuery
 } from '@chakra-ui/react'
 
 const UserControl = () => {
+	const [isSmallerThan1025] = useMediaQuery("(max-width: 1025px)")
 	const [user, setUser] = useContext(Context)
 
 	const handleLogout = () => {
@@ -23,14 +25,14 @@ const UserControl = () => {
 	return (
 		<Box w='100%'>
 			<Flex>
-				<Heading color='Gray 800' mb={16} ml={20} pl={10}>
+				<Heading color='Gray 800' mb={16} ml={isSmallerThan1025? 0 : 20} pl={isSmallerThan1025? 0 : 10}>
 					Your Links, {user.name}
 				</Heading>
 				<Spacer />
 				<Menu>
 					<MenuButton>
 						<Avatar
-							size='lg'
+							size={isSmallerThan1025? 'md' : 'lg'}
 							name={user.name}
 							//src='https://bit.ly/ryan-florence'
 						/>

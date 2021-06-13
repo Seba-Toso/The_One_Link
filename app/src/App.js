@@ -5,6 +5,7 @@ import { Box } from '@chakra-ui/react'
 import AppRouter from './router/routes'
 import { setToken } from './helpers/linksHelpers'
 
+
 function App() {
 	const [user, setUser] = useContext(Context)
 

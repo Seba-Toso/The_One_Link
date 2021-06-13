@@ -6,9 +6,11 @@ import {
 	Container,
 	Heading,
 	Divider,
+	useMediaQuery
 } from '@chakra-ui/react'
 
 const Filters = ({ setSorting }) => {
+	const [isSmallerThan1025] = useMediaQuery("(max-width: 1025px)")
 	const handleSort = (event) => {
 		const { target } = event
 		setSorting(target.value === '1' ? 'alphabetic' : 'source')
@@ -18,7 +20,7 @@ const Filters = ({ setSorting }) => {
 		<>
 			<Container
 				h='100%'
-				maxW='sm'
+				w={isSmallerThan1025? '40%' : '35%'}
 				borderWidth='1px'
 				borderRadius='lg'
 				mt={9}
