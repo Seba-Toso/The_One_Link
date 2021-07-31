@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useContext } from 'react'
 import { Context } from '../context/context'
 import { setToken } from '../helpers/linksHelpers'
@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react'
 import { Formik, Form, Field } from 'formik'
 import { createUser, logUser } from '../helpers/userHelpers'
+import Alerts from '../components/Alerts'
 
 const SessionForm = () => {
 	// eslint-disable-next-line no-unused-vars
@@ -52,6 +53,25 @@ const SessionForm = () => {
 		return error
 	}
 
+	const alertRef = useRef()
+	const handleAlerts = (alertType, message) => {
+		console.log(alertType)
+		console.log(message)
+		alertType === 'create'
+			? alertRef.current.handleOpen(
+					'success',
+					'Register: ',
+					message
+			)
+			: alertType === 'login'
+			? alertRef.current.handleOpen(
+					'success',
+					'Log in: ',
+					message
+			)
+			: alertRef.current.handleOpen('error', 'Error: ', message)
+	}
+
 	return (
 		<Container p={10}>
 			<Heading color='tomato' mb={16} textAlign='center'>
@@ -65,19 +85,18 @@ const SessionForm = () => {
 					const { name, username, password } = values
 					if (isNewUser) {
 						createUser(name, username, password)
-							.then(alert('User created'))
+							.then(handleAlerts('create', 'User created successfully. Please do a login to fullfill your registration.'))
 							.then(
 								resetForm({
 									values: { name: '', username: '', password: '' },
 								})
 							)
-							.then(alert('Thanks for create an account, please login'))
 							.then(setIsNewUser(false))
 							.then(setSubmitting(false))
-							.catch((error) => alert(error))
+							.catch((error) => handleAlerts('error', error))
 					} else {
 						logUser(username, password)
-							.then(alert('User logged'))
+							.then(handleAlerts('login', 'Login successfull, welcome!'))
 							.then((response) => {
 								setToken(response.token)
 								setUser(response)
@@ -92,7 +111,7 @@ const SessionForm = () => {
 								})
 							)
 							.then(setSubmitting(false))
-							.catch((error) => alert(error))
+							.catch((error) => handleAlerts('error', error))
 					}
 				}}
 			>
@@ -171,6 +190,8 @@ const SessionForm = () => {
 					? 'Speak friend and enter'
 					: 'One Does Not Simply Walk Into...'}
 			</Button>
+
+			<Alerts ref={alertRef} />
 		</Container>
 	)
 }

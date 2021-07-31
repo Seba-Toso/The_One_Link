@@ -20,10 +20,11 @@ const Filters = ({ setSorting }) => {
 		<>
 			<Container
 				h='100%'
-				w={isSmallerThan1025? '40%' : '35%'}
+				w={isSmallerThan1025? '100%' : '35%'}
+				maxWidth='unset'
 				borderWidth='1px'
 				borderRadius='lg'
-				mt={9}
+				mt={isSmallerThan1025? 0 : 9}
 				id='Filters'
 			>
 				<Heading color='tomato' size='lg' mb={4} mt={4}>
@@ -33,8 +34,8 @@ const Filters = ({ setSorting }) => {
 				<Heading color='tomato' size='md' mb={4}>
 					Search
 				</Heading>
-				<Input variant='filled' placeholder='Search by name' mb={4} />
-				<Input variant='filled' placeholder='Search by source' mb={4} />
+				<Input variant='filled' placeholder='Search by name' mb={4} disabled/>
+				<Input variant='filled' placeholder='Search by source' mb={4} disabled/>
 				<Divider mb={4} />
 				<Heading color='tomato' size='md' mb={4}>
 					Sort

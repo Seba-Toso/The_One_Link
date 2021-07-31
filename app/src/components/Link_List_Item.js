@@ -45,7 +45,7 @@ const ListLi = ({ link, handleDeleteLink, handleUdpdateLink }) => {
 
 	return (
 		<SlideFade in={isFade} offsetY='20px'>
-			<ListItem ml={isSmallerThan1025? 5 : 20} bg={liBackground} p={3}>
+			<ListItem ml={isSmallerThan1025? 0 : 20} bg={liBackground} p={3} w={isSmallerThan1025 && '100%'}>
 				<Flex>
 					<Link href={uri} isExternal ml={7} w='70%'>
 						{name}

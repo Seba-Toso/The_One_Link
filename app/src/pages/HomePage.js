@@ -3,7 +3,7 @@ import { getLinks } from '../helpers/linksHelpers'
 import NewLinkForm from '../components/NewLinkForm'
 import LinksList from '../components/List'
 import Alerts from '../components/Alerts'
-import { Box, useColorMode, Flex, Spacer, useMediaQuery, Menu, MenuButton, MenuList, IconButton,  } from '@chakra-ui/react'
+import { Box, useColorMode, Flex, Spacer, useMediaQuery, Menu, MenuButton, MenuList, IconButton, Tooltip  } from '@chakra-ui/react'
 import { HamburgerIcon } from '@chakra-ui/icons'
 const HomePage = ({ user }) => {
 
@@ -40,19 +40,19 @@ const HomePage = ({ user }) => {
 					'success',
 					'Create Link',
 					'Link created successfully'
-			  )
+			)
 			: alertType === 'delete'
 			? alertRef.current.handleOpen(
 					'warning',
 					'Delete Link',
 					'Link deleted successfully'
-			  )
+			)
 			: alertType === 'update'
 			? alertRef.current.handleOpen(
 					'info',
 					'Update Link',
 					'Link updated successfully'
-			  )
+			)
 			: alertRef.current.handleOpen('error', 'Error', 'Problem with solicitude')
 	}
 
@@ -62,22 +62,24 @@ const HomePage = ({ user }) => {
 			<>
 				{
 					isSmallerThan1025 ?
-					<Menu>
-						<MenuButton
-							w='5%'
-							as={IconButton}
-							aria-label="Options"
-							icon={<HamburgerIcon />}
-							variant="outline"
-						/>
-						<MenuList p={4}>
-							<NewLinkForm
-								addNewLink={addNewLink}
-								formFor='Add'
-								handleAlerts={handleAlerts}
+					<Tooltip label="Add Link" placement="right">
+						<Menu>
+							<MenuButton
+								w='5%'
+								as={IconButton}
+								aria-label="Options"
+								icon={<HamburgerIcon />}
+								variant="outline"
 							/>
-						</MenuList>
-					</Menu>
+							<MenuList p={4} w='60vw'>
+								<NewLinkForm
+									addNewLink={addNewLink}
+									formFor='Add'
+									handleAlerts={handleAlerts}
+								/>
+							</MenuList>
+						</Menu>
+					</Tooltip>
 					:
 					<Box w='25%' h='100%' p={4} style={{position: 'fixed'}}>
 						<NewLinkForm
@@ -90,14 +92,16 @@ const HomePage = ({ user }) => {
 			</>
 			<Spacer />
 			<Box w={isSmallerThan1025 ? '100%' : '70%'} p={4}>
-				{user && (
-					<LinksList
-						colorMode={colorMode}
-						linkList={linkList}
-						setLinkList={setLinkList}
-						handleAlerts={handleAlerts}
-					/>
-				)}
+				{user && 
+					<Tooltip label="Add Link" placement="right">
+						<LinksList
+							colorMode={colorMode}
+							linkList={linkList}
+							setLinkList={setLinkList}
+							handleAlerts={handleAlerts}
+						/>
+					</Tooltip>
+				}
 			</Box>
 
 			<Alerts ref={alertRef} />

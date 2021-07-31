@@ -8,8 +8,14 @@ import {
 	Spacer,
 	useColorModeValue,
 	Text,
-	useMediaQuery
+	useMediaQuery,
+	Menu, 
+	MenuButton,
+	MenuList, 
+	IconButton, 
+	Tooltip
 } from '@chakra-ui/react'
+import { Search2Icon } from '@chakra-ui/icons'
 
 const LinksList = ({ linkList, setLinkList, handleAlerts }) => {
 
@@ -61,15 +67,33 @@ const LinksList = ({ linkList, setLinkList, handleAlerts }) => {
 	return (
 		<>
 			<UserControl />
-
-			<Box>
+			{
+				isSmallerThan1025 ?
+				<Tooltip label="Search" placement="left">
+					<Menu>
+						<MenuButton
+							w='5%'
+							as={IconButton}
+							aria-label="Options"
+							icon={<Search2Icon />}
+							variant="outline"
+						/>
+						<MenuList p={4} w='70vw'>
+							<Filters /*setSorting={handleSort}*/ />
+						</MenuList>
+						</Menu>
+				</Tooltip>
+				:
+				null
+			}
+			<Box mt={isSmallerThan1025 && 2}>
 				<Flex >
 					<List 
 						spacing={5} 
 						borderLeft={isSmallerThan1025? 'none' : '1px dotted' } 
 						pl={isSmallerThan1025? 0 : 10} 
-						mr={isSmallerThan1025? 10 : 0}
-						w={isSmallerThan1025? '80%': '60%'}
+						mr={isSmallerThan1025? 0 : 0}
+						w={isSmallerThan1025? '100%': '60%'}
 
 					>
 						{!linkList || linkList.length === 0 ? (
@@ -81,7 +105,12 @@ const LinksList = ({ linkList, setLinkList, handleAlerts }) => {
 						)}
 					</List>
 					<Spacer />
-					<Filters /*setSorting={handleSort}*/ />
+					{
+						isSmallerThan1025 ?
+						null
+						:
+						<Filters /*setSorting={handleSort}*/ />
+					}
 				</Flex>
 			</Box>
 		</>
