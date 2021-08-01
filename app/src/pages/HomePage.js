@@ -13,7 +13,7 @@ const HomePage = ({ user }) => {
 	//List
 	const [linkList, setLinkList] = useState(null)
 	
-	console.log(isSmallerThan1025)
+	//console.log(isSmallerThan1025)
 
 	useEffect(() => {
 		getLinks()
@@ -92,7 +92,7 @@ const HomePage = ({ user }) => {
 			</>
 			<Spacer />
 			<Box w={isSmallerThan1025 ? '100%' : '70%'} p={4}>
-				{user && 
+				{user && linkList &&
 					<Tooltip label="Add Link" placement="right">
 						<LinksList
 							colorMode={colorMode}

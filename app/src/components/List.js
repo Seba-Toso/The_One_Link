@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import UserControl from './UserControl'
 import Filters from './Filters'
 import ListLi from './Link_List_Item'
@@ -25,17 +26,42 @@ const LinksList = ({ linkList, setLinkList, handleAlerts }) => {
 	const liBackground = useColorModeValue('gray.50', '#1e2533')
 
 	//Link handlers
-	/*
-	const handleSort = (sortType = null) => {
-		console.log(linkList)
-		if (!sortType) {
-			return
-		} else if (sortType === 'alphabetic') {
-			setLinkList(initialLinks.sort((a, b) => a - b))
-		} else {
-			setLinkList(initialLinks.sort((a, b) => b - a))
+	const [filteredList, setFilteredList] = useState(linkList)
+	const [isListManipulated, setIsListManipulated] = useState(false)
+	const [isSortedBy, setIsSortedBy] = useState()
+	const handleSort = (sortType) => {
+		setIsSortedBy(sortType)
+		console.log('sorted by: ', isSortedBy)
+		linkList.sort( (a, b) => {
+			if (a[sortType].toLowerCase() < b[sortType].toLowerCase()) {
+				return -1;
+			}
+			if (a[sortType].toLowerCase() > b[sortType].toLowerCase()) {
+				return 1;
+			}
+			return 0;
+		})
+	}
+	
+	const handleSearch = (searchKeys) => {
+		let updatedLinks = linkList
+
+		if(searchKeys.name.length < 2){
+			updatedLinks = linkList
 		}
-	}*/
+		if(searchKeys.name.length >= 2){
+			updatedLinks = updatedLinks.filter( link => link.name.toLowerCase().startsWith(searchKeys.name.toLowerCase()) )
+		}
+		if(searchKeys.source.length >= 2){
+			updatedLinks = updatedLinks.filter( link => link.source.toLowerCase().startsWith(searchKeys.source.toLowerCase()) )
+		}
+		if(updatedLinks.length === linkList.length){
+			setFilteredList(updatedLinks)
+			return setIsListManipulated(false)
+		}
+		setFilteredList(updatedLinks)
+		setIsListManipulated(true)
+	}
 
 	const deleteLink = (id) => {
 		const updatedLinks = linkList.filter((link) => link.id !== id)
@@ -51,14 +77,17 @@ const LinksList = ({ linkList, setLinkList, handleAlerts }) => {
 		handleAlerts('update')
 	}
 
+
+
 	const handleListItem = () => {
-		return linkList.map((link) => {
+		return filteredList.map((link) => {
 			return (
 				<ListLi
 					key={link.id}
 					link={link}
 					handleDeleteLink={deleteLink}
 					handleUdpdateLink={handleUpdate}
+					isListManipulated={isListManipulated}
 				/>
 			)
 		})
@@ -66,9 +95,9 @@ const LinksList = ({ linkList, setLinkList, handleAlerts }) => {
 
 	return (
 		<>
-			<UserControl />
+			{!isSmallerThan1025 && <UserControl />}
 			{
-				isSmallerThan1025 ?
+				isSmallerThan1025 &&
 				<Tooltip label="Search" placement="left">
 					<Menu>
 						<MenuButton
@@ -79,24 +108,21 @@ const LinksList = ({ linkList, setLinkList, handleAlerts }) => {
 							variant="outline"
 						/>
 						<MenuList p={4} w='70vw'>
-							<Filters /*setSorting={handleSort}*/ />
+							<Filters setSorting={handleSort} setSearch={handleSearch} />
 						</MenuList>
 						</Menu>
 				</Tooltip>
-				:
-				null
 			}
 			<Box mt={isSmallerThan1025 && 2}>
 				<Flex >
 					<List 
 						spacing={5} 
 						borderLeft={isSmallerThan1025? 'none' : '1px dotted' } 
-						pl={isSmallerThan1025? 0 : 10} 
 						mr={isSmallerThan1025? 0 : 0}
 						w={isSmallerThan1025? '100%': '60%'}
 
 					>
-						{!linkList || linkList.length === 0 ? (
+						{!filteredList || filteredList.length === 0 ? (
 							<Text ml={20} bg={liBackground} p={isSmallerThan1025? 0 : 3} textAlign='center'>
 								Start adding links
 							</Text>
@@ -106,10 +132,8 @@ const LinksList = ({ linkList, setLinkList, handleAlerts }) => {
 					</List>
 					<Spacer />
 					{
-						isSmallerThan1025 ?
-						null
-						:
-						<Filters /*setSorting={handleSort}*/ />
+						!isSmallerThan1025 &&
+						<Filters setSorting={handleSort} setSearch={handleSearch}/>
 					}
 				</Flex>
 			</Box>

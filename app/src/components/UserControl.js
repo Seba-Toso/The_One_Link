@@ -23,15 +23,19 @@ const UserControl = () => {
 	}
 
 	return (
-		<Box w='100%'>
+		<Box w={isSmallerThan1025 ? '10%' : '100%'}>
 			<Flex>
-				<Heading color='Gray 800' mb={16} ml={isSmallerThan1025? 0 : 20} pl={isSmallerThan1025? 0 : 10}>
-					Your Links, {user.name}
-				</Heading>
-				<Spacer />
+				{
+					!isSmallerThan1025 &&
+					<Heading color='Gray 800' mb={16} ml={isSmallerThan1025? 0 : 20} >
+						Your Links, {user.name}
+					</Heading>
+				}
+				{	!isSmallerThan1025 && <Spacer />}
 				<Menu>
 					<MenuButton>
 						<Avatar
+							ml={isSmallerThan1025 && '5'}
 							size={isSmallerThan1025? 'md' : 'lg'}
 							name={user.name}
 							//src='https://bit.ly/ryan-florence'

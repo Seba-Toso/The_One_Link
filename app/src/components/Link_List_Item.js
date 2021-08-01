@@ -19,7 +19,7 @@ import {
 } from '@chakra-ui/react'
 import { useEffect } from 'react'
 
-const ListLi = ({ link, handleDeleteLink, handleUdpdateLink }) => {
+const ListLi = ({ link, handleDeleteLink, handleUdpdateLink, isListManipulated }) => {
 	const [isSmallerThan1025] = useMediaQuery("(max-width: 1025px)")
 	const { name, source, uri, id } = link
 	//Modal handler
