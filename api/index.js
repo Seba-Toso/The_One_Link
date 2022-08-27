@@ -1,6 +1,7 @@
 require('colors')
 require('dotenv').config()
 const express = require('express')
+const path = require('path')
 const cors = require('cors')
 
 //Routers
@@ -35,10 +36,21 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use(express.static('../app/build'))
+app.use(express.static(path.join(__dirname,'../app/build')))
 
 app.get('/api', (_req, _res, next) => {
 	next()
+})
+
+app.get('*', (_req, _res, next) => {
+	res.sendFile(
+		path.join(__dirname, "../app/build/index.html"),
+		(err) => {
+			if(err){
+				res.status(500).send(err)
+			}
+		}
+	)
 })
 
 app.use('/api/links', linksRouter)
