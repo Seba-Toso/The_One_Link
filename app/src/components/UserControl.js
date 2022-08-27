@@ -1,53 +1,54 @@
-import { Heading } from '@chakra-ui/react'
 import { useContext } from 'react'
 import { Context } from '../context/context'
 import {
-	Box,
 	Flex,
-	Spacer,
-	Avatar,
 	Menu,
+	Button, 
+	Heading,
 	MenuButton,
 	MenuList,
 	MenuItem,
-	useMediaQuery
 } from '@chakra-ui/react'
 
-const UserControl = () => {
-	const [isSmallerThan1025] = useMediaQuery("(max-width: 1025px)")
+const UserControl = ({isForHeader, isSmallerThan1025, isSmallerThan415}) => {
 	const [user, setUser] = useContext(Context)
 
 	const handleLogout = () => {
 		window.localStorage.removeItem('loggedUser')
 		setUser(false)
 	}
+	//console.log(user);
+	if(!user){
+		return null
+	}
 
-	return (
-		<Box w={isSmallerThan1025 ? '10%' : '100%'}>
-			<Flex>
-				{
-					!isSmallerThan1025 &&
-					<Heading color='Gray 800' mb={16} ml={isSmallerThan1025? 0 : 20} >
-						Your Links, {user.name}
-					</Heading>
-				}
-				{	!isSmallerThan1025 && <Spacer />}
-				<Menu>
-					<MenuButton>
-						<Avatar
-							ml={isSmallerThan1025 && '5'}
-							size={isSmallerThan1025? 'md' : 'lg'}
-							name={user.name}
-							//src='https://bit.ly/ryan-florence'
-						/>
+	if(user && !isForHeader){
+		return (
+			<Heading color='Gray 800' mb={16} ml={isSmallerThan1025? 0 : 20} >
+			{user.name}, here are all your links
+		</Heading>
+		)
+	}
+
+	if(user && isForHeader){
+		return (
+			<Flex ml={isSmallerThan415 ? '3' : isSmallerThan1025 ? '5' : '7'}>
+				<Menu placement={'bottom'} boundary={'scrollParent'} isLazy={true} size={isSmallerThan415 ? 'sm' : 'md'}>
+					<MenuButton
+					as={Button}
+					bg='teal.300'
+					borderRadius={isSmallerThan415 ? 16 : 20}
+					size={isSmallerThan415 ? 'sm' : 'md'}
+					>
+						{user.name.substring(0, 1)}
 					</MenuButton>
 					<MenuList>
-						<MenuItem onClick={handleLogout}>Logout</MenuItem>
+						<MenuItem onClick={handleLogout} fontSize={isSmallerThan415 && 'sm'}>Logout</MenuItem>
 					</MenuList>
 				</Menu>
 			</Flex>
-		</Box>
-	)
+		)
+	}
 }
 
 export default UserControl

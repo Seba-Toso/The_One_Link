@@ -14,13 +14,14 @@ import {
 	MenuButton,
 	MenuList, 
 	IconButton, 
-	Tooltip
+	Heading
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 
 const LinksList = ({ linkList, setLinkList, handleAlerts }) => {
 
 	const [isSmallerThan1025] = useMediaQuery("(max-width: 1025px)")
+	const [isSmallerTha415] = useMediaQuery("(max-width: 415px)")
 
 	//Styles
 	const liBackground = useColorModeValue('gray.50', '#1e2533')
@@ -98,8 +99,8 @@ const LinksList = ({ linkList, setLinkList, handleAlerts }) => {
 			{!isSmallerThan1025 && <UserControl />}
 			{
 				isSmallerThan1025 &&
-				<Tooltip label="Search" placement="left">
-					<Menu>
+				<Flex mb={5}>
+					<Menu >
 						<MenuButton
 							w='5%'
 							as={IconButton}
@@ -107,17 +108,26 @@ const LinksList = ({ linkList, setLinkList, handleAlerts }) => {
 							icon={<Search2Icon />}
 							variant="outline"
 						/>
-						<MenuList p={4} w='70vw'>
+						<MenuList p={0} w='80vw' >
 							<Filters setSorting={handleSort} setSearch={handleSearch} />
 						</MenuList>
-						</Menu>
-				</Tooltip>
+					</Menu>
+					<Heading color='Gray 800' ml={5} size={isSmallerTha415? 'md' : 'lg'} >
+						{
+						isSmallerTha415 ? 
+						'Here are your links'	
+						:
+						'Here are all your links'
+						}
+					</Heading>
+				</Flex>
 			}
 			<Box mt={isSmallerThan1025 && 2}>
 				<Flex >
 					<List 
 						spacing={5} 
-						borderLeft={isSmallerThan1025? 'none' : '1px dotted' } 
+						borderLeft={isSmallerThan1025? 'none' : '6px dotted' } 
+						borderColor={'whiteAlpha.300'}
 						mr={isSmallerThan1025? 0 : 0}
 						w={isSmallerThan1025? '100%': '60%'}
 

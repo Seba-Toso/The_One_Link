@@ -75,7 +75,7 @@ const SessionForm = () => {
 	return (
 		<Container p={10}>
 			<Heading color='tomato' mb={16} textAlign='center'>
-				{isNewUser ? 'Logon' : 'Login'}
+				{isNewUser ? 'Create Account' : 'Sign in'}
 			</Heading>
 
 			<Formik
@@ -139,17 +139,19 @@ const SessionForm = () => {
 								)}
 							</Field>
 						)}
+						<br/>
 						<Field name='username' validate={validateUsername}>
 							{({ field, form }) => (
 								<FormControl
 									isInvalid={form.errors.username && form.touched.username}
 								>
 									<FormLabel htmlFor='username'>Username</FormLabel>
-									<Input {...field} id='username' placeholder='username' />
+									<Input {...field} id='username' placeholder='Username' />
 									<FormErrorMessage>{form.errors.username}</FormErrorMessage>
 								</FormControl>
 							)}
 						</Field>
+						<br/>
 						<Field name='password' validate={validatePassword}>
 							{({ field, form }) => (
 								<FormControl
@@ -161,7 +163,7 @@ const SessionForm = () => {
 											{...field}
 											type={show ? 'text' : 'password'}
 											id='password'
-											placeholder='password'
+											placeholder='Password'
 										/>
 										<InputRightElement width='4.5rem'>
 											<Button h='1.75rem' size='sm' onClick={handleClick}>
@@ -185,12 +187,13 @@ const SessionForm = () => {
 				)}
 			</Formik>
 
-			<Button mt={16} float='right' onClick={handleChangeForm}>
-				{isNewUser
-					? 'Speak friend and enter'
-					: 'One Does Not Simply Walk Into...'}
-			</Button>
-
+			<Container centerContent>
+				<Button mt={16} width='initial'  onClick={handleChangeForm}>
+					{isNewUser
+						? 'Speak friend and Sign In'
+						: 'Create an account'}
+				</Button>
+			</Container>
 			<Alerts ref={alertRef} />
 		</Container>
 	)

@@ -19,7 +19,7 @@ linksRouter.get('/', userEstractor, async (req, res, next) => {
 		})
 		//Here will be a filter to extract only user links
 		const userLinks = links.filter(
-			(link) => link.user.username === user.username
+			(link) => link?.user?.username === user?.username
 		)
 		res.status(200).send(userLinks)
 	} catch (error) {

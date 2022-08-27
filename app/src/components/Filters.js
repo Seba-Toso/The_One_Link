@@ -64,11 +64,10 @@ const Filters = ({ setSorting, setSearch }) => {
 				maxWidth='unset'
 				borderWidth='1px'
 				borderRadius='lg'
-				mt={isSmallerThan1025? 0 : 9}
 				id='Filters'
 			>
 				<Heading color='tomato' size='lg' mb={4} mt={4}>
-					Organize (soon...)
+					Clear this mess
 				</Heading>
 				<Divider mb={4} />
 				<Heading color='tomato' size='md' mb={4}>

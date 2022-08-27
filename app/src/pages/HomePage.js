@@ -4,10 +4,11 @@ import NewLinkForm from '../components/NewLinkForm'
 import LinksList from '../components/List'
 import Alerts from '../components/Alerts'
 import { Box, useColorMode, Flex, Spacer, useMediaQuery, Menu, MenuButton, MenuList, IconButton, Tooltip  } from '@chakra-ui/react'
-import { HamburgerIcon } from '@chakra-ui/icons'
+import { AddIcon } from '@chakra-ui/icons'
 const HomePage = ({ user }) => {
 
 	const [isSmallerThan1025] = useMediaQuery("(max-width: 1025px)")
+	const [isSmallerThan415] = useMediaQuery("(max-width: 415px)")
 	const { colorMode } = useColorMode()
 	const alertRef = useRef()
 	//List
@@ -58,28 +59,34 @@ const HomePage = ({ user }) => {
 
 	//------
 	return (
-		<Flex p={10} display={{ md: 'flex' }} flexDirection={isSmallerThan1025? 'column': 'row'}>
+		<Flex p={isSmallerThan415 ? 5 : isSmallerThan1025 ? 7 : 10} display={{ md: 'flex' }} flexDirection={isSmallerThan1025? 'column': 'row'}>
 			<>
 				{
 					isSmallerThan1025 ?
-					<Tooltip label="Add Link" placement="right">
-						<Menu>
-							<MenuButton
-								w='5%'
-								as={IconButton}
-								aria-label="Options"
-								icon={<HamburgerIcon />}
-								variant="outline"
+					<Menu>
+						<MenuButton
+							size={'lg'}
+							as={IconButton}
+							aria-label="Options"
+							icon={<AddIcon />}
+							variant="filled"
+							bg='teal.300'
+							position={'fixed'}
+							bottom={0}
+							right={0}
+							m={isSmallerThan415 ? 6 : 10}
+							borderRadius={20}
+							fontSize='25px'
+							color='white'
+						/>
+						<MenuList p={4} w='80vw'>
+							<NewLinkForm
+								addNewLink={addNewLink}
+								formFor='Add'
+								handleAlerts={handleAlerts}
 							/>
-							<MenuList p={4} w='60vw'>
-								<NewLinkForm
-									addNewLink={addNewLink}
-									formFor='Add'
-									handleAlerts={handleAlerts}
-								/>
-							</MenuList>
-						</Menu>
-					</Tooltip>
+						</MenuList>
+					</Menu>
 					:
 					<Box w='25%' h='100%' p={4} style={{position: 'fixed'}}>
 						<NewLinkForm
